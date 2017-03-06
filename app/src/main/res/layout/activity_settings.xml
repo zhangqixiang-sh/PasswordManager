@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="170dp"
+        android:background="@mipmap/hehe" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="除了密码以外没什么可设置的"
+        android:textColor="#444"
+        android:textSize="18sp" />
+    <Button
+        android:id="@+id/btn_pwd_setting"
+        android:layout_marginTop="20dp"
+        android:text="点击设置密码"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/selector_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

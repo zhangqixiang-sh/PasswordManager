@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:padding="5dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:background="@drawable/shape_frame_gray"
+        android:id="@+id/tv_server"
+        android:textColor="#444"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="百度"
+        android:layout_width="65dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:text="账号:xxx"
+            style="@style/textview_account" />
+
+        <TextView
+            android:id="@+id/tv_pwd"
+            style="@style/textview_account"
+            android:text="密码:xxx" />
+    </LinearLayout>
+
+</LinearLayout>

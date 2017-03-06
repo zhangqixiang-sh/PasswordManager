@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/Base.Theme.AppCompat.Light">
+
+        <SearchView
+
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:iconifiedByDefault="false"
+            android:queryHint="搜索..." />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>
