@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">我的密码们</string>
+    <string name="app_name">密码管理</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
