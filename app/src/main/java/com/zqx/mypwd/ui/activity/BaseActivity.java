@@ -1,4 +1,4 @@
-package com.zqx.mypwd.activity;
+package com.zqx.mypwd.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,10 +1,9 @@
 package com.zqx.mypwd.presenter;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.zqx.mypwd.activity.AccountsActivity;
-import com.zqx.mypwd.activity.AccountsView;
+import com.zqx.mypwd.ui.activity.AccountsActivity;
+import com.zqx.mypwd.ui.activity.AccountsView;
 import com.zqx.mypwd.bean.AccountBean;
 import com.zqx.mypwd.dao.AccountDao;
 import com.zqx.mypwd.event.AddAccountEvent;
@@ -71,7 +70,6 @@ public class AccountsPresenter implements IAccountsPresenter {
 
     @Override
     public void deleteAccount(final AccountBean accountBean, final int dataPosition) {
-        Log.d("debug", "deleteAccount: id = " + accountBean.id);
         Run.onSub(new Runnable() {
             @Override
             public void run() {
@@ -91,7 +89,6 @@ public class AccountsPresenter implements IAccountsPresenter {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(UpdateAccountEvent event) {
-        Log.d("debug", "Presenter接收到更新事件");
         AccountDao.updateAccount(mContext, event.accountBean);
         Run.onMain(new Runnable() {
             @Override
@@ -105,7 +102,6 @@ public class AccountsPresenter implements IAccountsPresenter {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(AddAccountEvent event) {
-        Log.d("debug", "PwdPresenter接收到添加事件");
         AccountDao.saveAccount(mContext, event.accountBean);
         Run.onMain(new Runnable() {
             @Override
@@ -115,8 +111,5 @@ public class AccountsPresenter implements IAccountsPresenter {
         });
     }
 
-    public void unRegister() {
-        EventBus.getDefault().unregister(this);
-    }
 
 }

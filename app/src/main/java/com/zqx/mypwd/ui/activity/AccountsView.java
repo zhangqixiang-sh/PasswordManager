@@ -1,4 +1,4 @@
-package com.zqx.mypwd.activity;
+package com.zqx.mypwd.ui.activity;
 
 import com.zqx.mypwd.bean.AccountBean;
 

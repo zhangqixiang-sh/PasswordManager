@@ -1,4 +1,4 @@
-package com.zqx.mypwd.dialog;
+package com.zqx.mypwd.ui.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +16,7 @@ import com.zqx.mypwd.event.AddAccountEvent;
 import com.zqx.mypwd.event.UpdateAccountEvent;
 import com.zqx.mypwd.util.StringUtil;
 import com.zqx.mypwd.util.ToastUtil;
-import com.zqx.mypwd.activity.AccountsActivity;
+import com.zqx.mypwd.ui.activity.AccountsActivity;
 
 import org.greenrobot.eventbus.EventBus;
 

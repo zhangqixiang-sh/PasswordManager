@@ -1,4 +1,4 @@
-package com.zqx.mypwd.dialog;
+package com.zqx.mypwd.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

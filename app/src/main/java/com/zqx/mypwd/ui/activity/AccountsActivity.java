@@ -1,4 +1,4 @@
-package com.zqx.mypwd.activity;
+package com.zqx.mypwd.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,10 +23,12 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.zqx.mypwd.R;
 import com.zqx.mypwd.adapter.AccountAdapter;
 import com.zqx.mypwd.bean.AccountBean;
-import com.zqx.mypwd.dialog.AccountDialog;
+import com.zqx.mypwd.ui.dialog.AccountDialog;
 import com.zqx.mypwd.presenter.AccountsPresenter;
 import com.zqx.mypwd.util.DensityUtil;
 import com.zqx.mypwd.util.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +68,6 @@ public class AccountsActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("debug", "onResume: ");
         mRvList.smoothCloseMenu();
         mSearch.clearFocus();
     }
@@ -88,7 +89,7 @@ public class AccountsActivity extends BaseActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.unRegister();
+        EventBus.getDefault().unregister(mPresenter);
     }
 
     @Override
@@ -141,14 +142,12 @@ public class AccountsActivity extends BaseActivity implements
         mAccounts.clear();
         mAccounts.addAll(accounts);
         mAdapter.notifyDataSetChanged();
-        Log.d("debug", "AccountsActivity->onQueryAllAccounts->notifyDataSetChanged");
 
     }
 
     @Override
     public void onAddAccount() {
         mPresenter.queryAllAccounts();
-        Log.d("debug", "PwdActivity_onAddAccount被调用");
     }
 
     @Override
@@ -235,7 +234,6 @@ public class AccountsActivity extends BaseActivity implements
                     }).show();
 
         } else if (menuPosition == 0) {//点击编辑
-            Log.d("debug", "onItemClick: 点击了编辑");
             mRvList.smoothCloseMenu();
             new AccountDialog(this,mAccounts.get(dataPosition)).show();
 

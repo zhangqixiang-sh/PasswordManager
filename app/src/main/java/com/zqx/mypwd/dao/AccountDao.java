@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.zqx.mypwd.bean.AccountBean;
 import com.zqx.mypwd.util.SqlEncoder;
@@ -25,7 +24,6 @@ public class AccountDao {
     private static final int    VERSION    = 1;
 
     public static void saveAccount(Context context, AccountBean bean) {
-        Log.d("debug", "dao层saveAccount被调用");
         DbOpener opener = new DbOpener(context.getApplicationContext());
         SQLiteDatabase db = opener.getWritableDatabase();
         String sql = "insert into " + TABLE_NAME + " (" +
@@ -36,7 +34,6 @@ public class AccountDao {
         db.execSQL(sql, args);
         opener.close();
         db.close();
-        Log.d("debug", "dao层saveAccount执行结束");
     }
 
     public static int deleteAccount(Context context, AccountBean bean) {
@@ -46,7 +43,6 @@ public class AccountDao {
         int i = db.delete(TABLE_NAME, "_id =?", param);
         db.close();
         opener.close();
-        Log.d("debug", "deleteAccount: 删除账户记录, id = " + bean.id);
         return i;
     }
 
@@ -57,11 +53,9 @@ public class AccountDao {
         values.put(C_SERVER, bean.server);
         values.put(C_NAME, bean.name);
         values.put(C_PWD, bean.pwd);
-        Log.d("debug", "updateAccount: id = "+bean.id);
         db.update(TABLE_NAME, values, "_id=?", new String[]{bean.id + ""});
         db.close();
         opener.close();
-        Log.d("debug", "updateAccount: 更新l了 <"+bean.server+"> 的记录:");
     }
 
 
@@ -95,7 +89,6 @@ public class AccountDao {
     }
 
     public static List<AccountBean> getAllAccounts(Context context) {
-        Log.d("debug", "Dao层getAllAccounts被调用");
         DbOpener opener = new DbOpener(context.getApplicationContext());
         SQLiteDatabase db = opener.getWritableDatabase();
         String sql = "select * from " + TABLE_NAME;
@@ -114,7 +107,6 @@ public class AccountDao {
         }
         opener.close();
         db.close();
-        Log.d("debug", "Dao层getAllAccounts执行完毕");
         return list;
     }
 

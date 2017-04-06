@@ -1,10 +1,11 @@
-package com.zqx.mypwd.activity;
+package com.zqx.mypwd.ui.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zqx.mypwd.R;
-import com.zqx.mypwd.dialog.PwdSettingDialog;
+import com.zqx.mypwd.ui.dialog.PwdSettingDialog;
 import com.zqx.mypwd.event.PwdChangedEvent;
 import com.zqx.mypwd.util.SpUtil;
 import com.zqx.mypwd.util.Spkey;
@@ -81,7 +82,6 @@ public class CheckInActivity extends BaseActivity implements TextView.OnEditorAc
     @Subscribe
     public void onEvent(PwdChangedEvent event) {
         mPwd = event.pwd;
-        Log.d("debug", "设置界面接收到密码改变:pwd = " + mPwd);
     }
 
     @Override
@@ -90,6 +90,7 @@ public class CheckInActivity extends BaseActivity implements TextView.OnEditorAc
         EventBus.getDefault().unregister(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private boolean canUse() {
         //检查权限
         if (ActivityCompat.checkSelfPermission(this,
