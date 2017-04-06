@@ -1,9 +1,7 @@
 package com.zqx.mypwd.ui.dialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,14 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zqx.mypwd.R;
-import com.zqx.mypwd.bean.AccountBean;
-import com.zqx.mypwd.event.AddAccountEvent;
-import com.zqx.mypwd.event.UpdateAccountEvent;
+import com.zqx.mypwd.model.bean.AccountBean;
+import com.zqx.mypwd.presenter.AccountsPresenter;
+import com.zqx.mypwd.ui.activity.AccountsActivity;
 import com.zqx.mypwd.util.StringUtil;
 import com.zqx.mypwd.util.ToastUtil;
-import com.zqx.mypwd.ui.activity.AccountsActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +22,7 @@ import butterknife.OnClick;
 /**
  * Created by ZhangQixiang on 2017/2/14.
  */
-public class AccountDialog extends TopDownDialog implements DialogInterface.OnDismissListener {
+public class AccountDialog extends TopDownDialog{
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
@@ -39,13 +34,13 @@ public class AccountDialog extends TopDownDialog implements DialogInterface.OnDi
     EditText mEtPwd;
     private boolean mIsAdd = true;
     private AccountBean mBeanToUpdate;
+    private AccountsPresenter mPresenter;
 
     public AccountDialog(Context context) {
         super(context);
         setContentView(R.layout.dialog_entry);
         ButterKnife.bind(this);
-        setOnDismissListener(this);
-
+        this.mPresenter = ((AccountsActivity) context).mPresenter;
     }
 
     public AccountDialog(AccountsActivity context, AccountBean bean) {
@@ -104,20 +99,15 @@ public class AccountDialog extends TopDownDialog implements DialogInterface.OnDi
     }
 
     private void doUpdate(String server, String name, String pwd) {
-        Log.d("debug", "doConfirm: 发送更新事件");
         mBeanToUpdate.server = server;
         mBeanToUpdate.name = name;
         mBeanToUpdate.pwd = pwd;
-        EventBus.getDefault().post(new UpdateAccountEvent(mBeanToUpdate));
+        mPresenter.updateAccount(mBeanToUpdate);
     }
 
     private void doAdd(String server, String name, String pwd) {
         AccountBean accountBean = new AccountBean(server, name, pwd);
-        EventBus.getDefault().post(new AddAccountEvent(accountBean));
+        mPresenter.addAccount(accountBean);
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        EventBus.getDefault().unregister(this);
-    }
 }

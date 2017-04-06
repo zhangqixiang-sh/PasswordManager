@@ -2,17 +2,13 @@ package com.zqx.mypwd.presenter;
 
 import android.content.Context;
 
+import com.zqx.mypwd.dao.AccountDao;
+import com.zqx.mypwd.model.bean.AccountBean;
+import com.zqx.mypwd.model.manager.EncryptManager;
 import com.zqx.mypwd.ui.activity.AccountsActivity;
 import com.zqx.mypwd.ui.activity.AccountsView;
-import com.zqx.mypwd.bean.AccountBean;
-import com.zqx.mypwd.dao.AccountDao;
-import com.zqx.mypwd.event.AddAccountEvent;
-import com.zqx.mypwd.event.UpdateAccountEvent;
+import com.zqx.mypwd.util.LogUtil;
 import com.zqx.mypwd.util.Run;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -27,8 +23,6 @@ public class AccountsPresenter implements IAccountsPresenter {
     public AccountsPresenter(AccountsView accountsView) {
         mAccountsView = accountsView;
         mContext = ((AccountsActivity) accountsView).getApplicationContext();
-        EventBus.getDefault().register(this);
-
     }
 
     @Override
@@ -37,7 +31,9 @@ public class AccountsPresenter implements IAccountsPresenter {
             @Override
             public void run() {
                 final List<AccountBean> accounts = AccountDao.getAllAccounts(mContext);
-
+                for (AccountBean account : accounts) {
+                    EncryptManager.decryptAccount(account);
+                }
                 Run.onMain(new Runnable() {
                     @Override
                     public void run() {
@@ -57,6 +53,9 @@ public class AccountsPresenter implements IAccountsPresenter {
             @Override
             public void run() {
                 final List<AccountBean> accounts = AccountDao.getAccountsLike(mContext, text);
+                for (AccountBean account : accounts) {
+                    EncryptManager.decryptAccount(account);
+                }
                 Run.onMain(new Runnable() {
                     @Override
                     public void run() {
@@ -87,28 +86,42 @@ public class AccountsPresenter implements IAccountsPresenter {
     }
 
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(UpdateAccountEvent event) {
-        AccountDao.updateAccount(mContext, event.accountBean);
-        Run.onMain(new Runnable() {
+    public void updateAccount(final AccountBean bean) {
+        Run.onSub(new Runnable() {
             @Override
             public void run() {
-                mAccountsView.onUpdateAccount();
+                EncryptManager.encryptAccount(bean);
+                LogUtil.d("debug","加密结果: name="+bean.name+" pwd="+bean.pwd);
+                AccountDao.updateAccount(mContext, bean);
+                EncryptManager.decryptAccount(bean);
+                Run.onMain(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAccountsView.onUpdateAccount();
+                    }
+                });
             }
         });
+
     }
 
 
-
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(AddAccountEvent event) {
-        AccountDao.saveAccount(mContext, event.accountBean);
-        Run.onMain(new Runnable() {
+    public void addAccount(final AccountBean bean) {
+        Run.onSub(new Runnable() {
             @Override
             public void run() {
-                mAccountsView.onAddAccount();
+                EncryptManager.encryptAccount(bean);
+                LogUtil.d("debug","加密结果: name="+bean.name+" pwd="+bean.pwd);
+                AccountDao.saveAccount(mContext, bean);
+                Run.onMain(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAccountsView.onAddAccount();
+                    }
+                });
             }
         });
+
     }
 
 

@@ -1,4 +1,4 @@
-package com.zqx.mypwd.bean;
+package com.zqx.mypwd.model.bean;
 
 /**
  * Created by ZhangQixiang on 2017/2/13.

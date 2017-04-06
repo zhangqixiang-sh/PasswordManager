@@ -1,6 +1,6 @@
 package com.zqx.mypwd.ui.activity;
 
-import com.zqx.mypwd.bean.AccountBean;
+import com.zqx.mypwd.model.bean.AccountBean;
 
 import java.util.List;
 

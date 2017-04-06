@@ -1,13 +1,16 @@
 package com.zqx.mypwd.util;
 
-import android.annotation.SuppressLint;
+import com.zqx.mypwd.global.GlobalData;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
@@ -18,70 +21,71 @@ public class AESUtil {
     private final static String HEX = "0123456789ABCDEF";
 
     public static String encrypt(String seed, String cleartext) {
-        byte[] rawKey = getRawKey(seed.getBytes());
-        byte[] result = encrypt(rawKey, cleartext.getBytes());
+        byte[] keyBytes = getKeyBytes(seed);
+        byte[] result = encrypt(keyBytes, cleartext.getBytes());
         return toHex(result);
     }
 
+    private static byte[] getKeyBytes(String seed) {
+        return GlobalData.getKeyBytes();
+    }
+
+    public static byte[] createKeyBytes(String seed) {
+    /* Store these things on disk used to derive key later: */
+        int iterationCount = 1000;
+        int saltLength = 32; // bytes; should be the same size as the output (256 / 8 = 32)
+        int keyLength = 256; // 256-bits for AES-256, 128-bits for AES-128, etc
+
+        /* When first creating the key, obtain a salt with this: */
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[saltLength];
+        random.nextBytes(salt);
+
+        /* Use this to derive the key from the password: */
+        KeySpec keySpec = new PBEKeySpec(seed.toCharArray(), salt, iterationCount, keyLength);
+        try {
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            byte[] encoded = keyFactory.generateSecret(keySpec).getEncoded();
+            return encoded;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String decrypt(String seed, String encrypted) {
-        byte[] rawKey = getRawKey(seed.getBytes());
+        byte[] keyBytes = getKeyBytes(seed);
         byte[] enc = toByte(encrypted);
-        byte[] result = decrypt(rawKey, enc);
+        byte[] result = decrypt(keyBytes, enc);
         return new String(result);
     }
 
-    @SuppressLint("TrulyRandom")
-    private static byte[] getRawKey(byte[] seed) {
-        KeyGenerator kgen;
-        byte[] raw = null;
-        try {
-            SecureRandom sr;
-            kgen = KeyGenerator.getInstance("AES");
-            sr = SecureRandom.getInstance("SHA1PRNG", "Crypto");
-            sr.setSeed(seed);
-            kgen.init(128, sr); // 192 and 256 bits may not be available
-            SecretKey skey = kgen.generateKey();
-            raw = skey.getEncoded();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return raw;
+    private static byte[] encrypt(byte[] keyBytes, byte[] clear) {
+        return crypt(keyBytes, clear, Cipher.ENCRYPT_MODE);
     }
 
-    private static byte[] encrypt(byte[] raw, byte[] clear) {
+    private static byte[] decrypt(byte[] keyBytes, byte[] encrypted) {
+        return crypt(keyBytes, encrypted, Cipher.DECRYPT_MODE);
+    }
+
+    private static byte[] crypt(byte[] raw, byte[] target, int cipherMode) {
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
         Cipher cipher;
-        byte[] encrypted = null;
+        byte[] crypt = null;
         try {
             cipher = Cipher.getInstance("AES");
             cipher.init(
-                    Cipher.ENCRYPT_MODE, skeySpec,
+                    cipherMode, skeySpec,
                     new IvParameterSpec(new byte[cipher.getBlockSize()])
             );
-            encrypted = cipher.doFinal(clear);
+            crypt = cipher.doFinal(target);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return encrypted;
-    }
-
-    private static byte[] decrypt(byte[] raw, byte[] encrypted) {
-        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher;
-        byte[] decrypted = null;
-        try {
-            cipher = Cipher.getInstance("AES");
-            cipher.init(
-                    Cipher.DECRYPT_MODE, skeySpec,
-                    new IvParameterSpec(new byte[cipher.getBlockSize()])
-            );
-            decrypted = cipher.doFinal(encrypted);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return decrypted;
+        return crypt;
     }
 
     private static byte[] toByte(String hexString) {

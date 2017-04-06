@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuAdapter;
 import com.zqx.mypwd.R;
-import com.zqx.mypwd.bean.AccountBean;
+import com.zqx.mypwd.model.bean.AccountBean;
 
 import java.util.List;
 

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -19,7 +18,7 @@ import com.zqx.mypwd.R;
 import com.zqx.mypwd.ui.dialog.PwdSettingDialog;
 import com.zqx.mypwd.event.PwdChangedEvent;
 import com.zqx.mypwd.util.SpUtil;
-import com.zqx.mypwd.util.Spkey;
+import com.zqx.mypwd.global.Spkey;
 import com.zqx.mypwd.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,8 +52,7 @@ public class CheckInActivity extends BaseActivity implements TextView.OnEditorAc
     @Override
     protected void onResume() {
         super.onResume();
-        mPwd = SpUtil.getString(this, Spkey.PWD, "");
-        Log.d("debug", "onResume: mPwd = " + mPwd);
+        mPwd = SpUtil.getString(Spkey.PWD, "");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mFinManager = ((FingerprintManager) getSystemService(FINGERPRINT_SERVICE));
             if (mFinManager.isHardwareDetected()) {
@@ -143,6 +141,7 @@ public class CheckInActivity extends BaseActivity implements TextView.OnEditorAc
 
 
     //防止内存泄漏
+    @RequiresApi(api = Build.VERSION_CODES.M)
     static class AuthCallback extends FingerprintManager.AuthenticationCallback {
 
         WeakReference<CheckInActivity> mActivity;

@@ -22,13 +22,11 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.zqx.mypwd.R;
 import com.zqx.mypwd.adapter.AccountAdapter;
-import com.zqx.mypwd.bean.AccountBean;
-import com.zqx.mypwd.ui.dialog.AccountDialog;
+import com.zqx.mypwd.model.bean.AccountBean;
 import com.zqx.mypwd.presenter.AccountsPresenter;
+import com.zqx.mypwd.ui.dialog.AccountDialog;
 import com.zqx.mypwd.util.DensityUtil;
 import com.zqx.mypwd.util.ToastUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,7 @@ public class AccountsActivity extends BaseActivity implements
     SwipeMenuRecyclerView mRvList;
     @BindView(R.id.coor)
     CoordinatorLayout     mCoor;
-    private AccountsPresenter      mPresenter;
+    public AccountsPresenter      mPresenter;
     private ArrayList<AccountBean> mAccounts;
     private AccountAdapter         mAdapter;
 
@@ -85,13 +83,6 @@ public class AccountsActivity extends BaseActivity implements
         mRvList.setAdapter(mAdapter);
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(mPresenter);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -105,7 +96,6 @@ public class AccountsActivity extends BaseActivity implements
                 new AccountDialog(this).show();
                 break;
             case R.id.action_setting:
-                ToastUtil.show("设置功能暂未开通");
                 startActivity(SettingsActivity.class, false);
                 break;
         }
@@ -139,9 +129,7 @@ public class AccountsActivity extends BaseActivity implements
 
     @Override
     public void onQueryAllAccounts(List<AccountBean> accounts) {
-        mAccounts.clear();
-        mAccounts.addAll(accounts);
-        mAdapter.notifyDataSetChanged();
+        showAccounts(accounts);
 
     }
 
@@ -152,6 +140,10 @@ public class AccountsActivity extends BaseActivity implements
 
     @Override
     public void onSearchResult(List<AccountBean> accounts) {
+        showAccounts(accounts);
+    }
+
+    private void showAccounts(List<AccountBean> accounts) {
         mAccounts.clear();
         mAccounts.addAll(accounts);
         mAdapter.notifyDataSetChanged();
@@ -168,7 +160,6 @@ public class AccountsActivity extends BaseActivity implements
 
     @Override
     public void onUpdateAccount() {
-        Log.d("debug", "onUpdateAccount: ");
         mAdapter.notifyDataSetChanged();
     }
 

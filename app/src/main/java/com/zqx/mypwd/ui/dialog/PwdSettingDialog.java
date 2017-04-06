@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.zqx.mypwd.R;
 import com.zqx.mypwd.event.PwdChangedEvent;
 import com.zqx.mypwd.util.SpUtil;
-import com.zqx.mypwd.util.Spkey;
+import com.zqx.mypwd.global.Spkey;
 import com.zqx.mypwd.util.StringUtil;
 import com.zqx.mypwd.util.ToastUtil;
 
@@ -90,7 +90,7 @@ public class PwdSettingDialog extends Dialog implements TextView.OnEditorActionL
             ToastUtil.show("两次密码输入不一致");
             return;
         }
-        SpUtil.saveString(getContext(), Spkey.PWD, pwd1);
+        SpUtil.saveString(Spkey.PWD, pwd1);
         EventBus.getDefault().post(new PwdChangedEvent(pwd1));
         dismiss();
     }

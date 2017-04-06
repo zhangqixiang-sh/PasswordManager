@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.zqx.mypwd.bean.AccountBean;
+import com.zqx.mypwd.model.bean.AccountBean;
 import com.zqx.mypwd.util.SqlEncoder;
 
 import java.util.ArrayList;
@@ -30,6 +30,9 @@ public class AccountDao {
                 C_SERVER + ", " +
                 C_NAME + ", " +
                 C_PWD + ") values (?,?,?)";
+
+
+
         String[] args = new String[]{bean.server, bean.name, bean.pwd};
         db.execSQL(sql, args);
         opener.close();
@@ -47,7 +50,7 @@ public class AccountDao {
     }
 
     public static void updateAccount(Context context, AccountBean bean) {
-        DbOpener opener = new DbOpener(context.getApplicationContext());
+        DbOpener opener = new DbOpener(context);
         SQLiteDatabase db = opener.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(C_SERVER, bean.server);
