@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuAdapter;
 import com.zqx.mypwd.R;
+import com.zqx.mypwd.global.GlobalData;
 import com.zqx.mypwd.model.bean.AccountBean;
 
 import java.util.List;
@@ -38,9 +39,13 @@ public class AccountAdapter extends SwipeMenuAdapter<AccountAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         AccountBean bean = mDatas.get(position);
-                holder.mTvServer.setText(bean.server);
-                holder.mTvName.setText("账号: "+bean.name);
-                holder.mTvPwd.setText("密码: "+bean.pwd);
+        holder.mTvServer.setText(bean.server);
+        holder.mTvName.setText("账号: " + bean.name);
+        if (GlobalData.getHidePwd()) {
+            holder.mTvPwd.setText("密码: *********");
+        } else {
+            holder.mTvPwd.setText("密码: " + bean.pwd);
+        }
     }
 
     @Override
@@ -60,6 +65,7 @@ public class AccountAdapter extends SwipeMenuAdapter<AccountAdapter.ViewHolder> 
             super(view);
             ButterKnife.bind(this, view);
         }
+
     }
 
 }

@@ -8,8 +8,9 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="180dp"
-        android:layout_height="170dp"
+        android:layout_marginTop="130dp"
+        android:layout_width="160dp"
+        android:layout_height="150dp"
         android:background="@mipmap/hehe" />
 
     <TextView
@@ -26,6 +27,18 @@
         android:textSize="18sp"
         android:textColor="@android:color/white"
         android:background="@drawable/selector_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Space
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <TextView
+        android:textColor="#444"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:text="@string/version_time"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

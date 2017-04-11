@@ -6,4 +6,5 @@ package com.zqx.mypwd.global;
 public class Spkey {
     public static final String PWD       = "pwd";
     public static final String KEY_BYTES = "key bytes string";
+    public static final String HIDE_PWD  = "hide password";
 }

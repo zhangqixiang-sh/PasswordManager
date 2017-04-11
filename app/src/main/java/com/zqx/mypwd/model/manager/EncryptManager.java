@@ -1,6 +1,6 @@
 package com.zqx.mypwd.model.manager;
 
-import com.zqx.mypwd.global.Const;
+import com.zqx.mypwd.global.C;
 import com.zqx.mypwd.model.bean.AccountBean;
 import com.zqx.mypwd.util.AESUtil;
 
@@ -10,14 +10,14 @@ import com.zqx.mypwd.util.AESUtil;
 
 public class EncryptManager {
     public static AccountBean encryptAccount(AccountBean bean) {
-        bean.name = AESUtil.encrypt(Const.strings.seed, bean.name);
-        bean.pwd = AESUtil.encrypt(Const.strings.seed, bean.pwd);
+        bean.name = AESUtil.encrypt(C.string.seed, bean.name);
+        bean.pwd = AESUtil.encrypt(C.string.seed, bean.pwd);
         return bean;
     }
 
     public static AccountBean decryptAccount(AccountBean bean) {
-        bean.name = AESUtil.decrypt(Const.strings.seed, bean.name);
-        bean.pwd = AESUtil.decrypt(Const.strings.seed, bean.pwd);
+        bean.name = AESUtil.decrypt(C.string.seed, bean.name);
+        bean.pwd = AESUtil.decrypt(C.string.seed, bean.pwd);
         return bean;
     }
 }

@@ -8,10 +8,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.SearchView;
 
 import com.yanzhenjie.recyclerview.swipe.Closeable;
@@ -22,6 +20,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.zqx.mypwd.R;
 import com.zqx.mypwd.adapter.AccountAdapter;
+import com.zqx.mypwd.global.GlobalData;
 import com.zqx.mypwd.model.bean.AccountBean;
 import com.zqx.mypwd.presenter.AccountsPresenter;
 import com.zqx.mypwd.ui.dialog.AccountDialog;
@@ -98,6 +97,10 @@ public class AccountsActivity extends BaseActivity implements
             case R.id.action_setting:
                 startActivity(SettingsActivity.class, false);
                 break;
+            case R.id.action_hide_pwd:
+                GlobalData.toggleHidePwd();
+                mAdapter.notifyDataSetChanged();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -152,7 +155,7 @@ public class AccountsActivity extends BaseActivity implements
     @Override
     public void onDeleteAccount(int deleteNum, int dataPosition) {
         if (deleteNum != 0) {
-            ToastUtil.show("(数据库中)成功删除了" + deleteNum + "条记录");
+            ToastUtil.show("成功删除了" + deleteNum + "条记录");
         } else {
             ToastUtil.show("删除失败");
         }
@@ -170,9 +173,9 @@ public class AccountsActivity extends BaseActivity implements
                 .setImage(R.mipmap.edit_white) // 图标。
                 .setText("编辑")
                 .setTextColor(Color.WHITE) // 文字颜色。
-                .setTextSize(DensityUtil.sp2px(this, 7)) // 文字大小。
+                .setTextSize(DensityUtil.sp2px(this, 5)) // 文字大小。
                 .setWidth(DensityUtil.dip2px(this, 60)) // 宽度。
-                .setHeight(DensityUtil.dip2px(this, 85)); // 高度。
+                .setHeight(DensityUtil.dip2px(this, 90)); // 高度。
         swipeRightMenu.addMenuItem(item_edit); // 添加一个按钮到左侧菜单。
 
         SwipeMenuItem deleteItem = new SwipeMenuItem(this)
@@ -180,9 +183,9 @@ public class AccountsActivity extends BaseActivity implements
                 .setImage(R.mipmap.delete_white) // 图标。
                 .setText("删除") // 文字。
                 .setTextColor(Color.WHITE) // 文字颜色。
-                .setTextSize(DensityUtil.sp2px(this, 7)) // 文字大小。
+                .setTextSize(DensityUtil.sp2px(this, 5)) // 文字大小。
                 .setWidth(DensityUtil.dip2px(this, 60))
-                .setHeight(DensityUtil.dip2px(this, 85));
+                .setHeight(DensityUtil.dip2px(this, 90));
         swipeRightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。.
 
     }
@@ -192,17 +195,11 @@ public class AccountsActivity extends BaseActivity implements
 
         final AccountBean bean = mAccounts.get(dataPosition);
         if (menuPosition == 1) {//点击删除
-            Log.d("debug", "onItemClick: 点击了删除");
             mAccounts.remove(dataPosition);
             mAdapter.notifyItemRemoved(dataPosition);
             ToastUtil.show("点击撤回可以撤销删除");
             Snackbar.make(mCoor, "删除一条记录", Snackbar.LENGTH_LONG)
-                    .setAction("撤回", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    })
+                    .setAction("撤回", null)
                     .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
                         @Override
                         public void onDismissed(Snackbar transientBottomBar, int event) {
@@ -217,8 +214,7 @@ public class AccountsActivity extends BaseActivity implements
                                     mRvList.smoothCloseMenu();
                                     ToastUtil.show("撤销成功");
                                     break;
-                                default:
-                                    break;
+
                             }
                         }
 
