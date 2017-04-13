@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical">
+    android:paddingRight="16dp">
 
     <ImageView
-        android:layout_marginTop="130dp"
         android:layout_width="160dp"
         android:layout_height="150dp"
+        android:layout_marginTop="130dp"
         android:background="@mipmap/hehe" />
 
     <TextView
@@ -20,25 +20,28 @@
         android:text="除了密码以外没什么可设置的"
         android:textColor="#444"
         android:textSize="18sp" />
+
     <Button
         android:id="@+id/btn_pwd_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="点击设置密码"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
         android:background="@drawable/selector_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:text="点击设置密码"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
     <Space
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <TextView
-        android:textColor="#444"
-        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="@string/version_time"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textColor="#444"
+        android:textSize="15sp" />
 </LinearLayout>

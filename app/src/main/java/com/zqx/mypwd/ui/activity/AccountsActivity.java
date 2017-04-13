@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import com.yanzhenjie.recyclerview.swipe.Closeable;
@@ -33,7 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class AccountsActivity extends BaseActivity implements
-        SearchView.OnQueryTextListener, AccountsView, SwipeMenuCreator, OnSwipeMenuItemClickListener {
+        SearchView.OnQueryTextListener, AccountsView, SwipeMenuCreator, OnSwipeMenuItemClickListener{
     @BindView(R.id.search)
     SearchView            mSearch;
     @BindView(R.id.toolbar)
@@ -80,6 +81,7 @@ public class AccountsActivity extends BaseActivity implements
         mAccounts = new ArrayList<>();
         mAdapter = new AccountAdapter(mAccounts);
         mRvList.setAdapter(mAdapter);
+        mRvList.setLongPressDragEnabled(true);
     }
 
     @Override
@@ -199,7 +201,12 @@ public class AccountsActivity extends BaseActivity implements
             mAdapter.notifyItemRemoved(dataPosition);
             ToastUtil.show("点击撤回可以撤销删除");
             Snackbar.make(mCoor, "删除一条记录", Snackbar.LENGTH_LONG)
-                    .setAction("撤回", null)
+                    .setAction("撤回", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //这里必须有一个listener,至少是空实现,不能传null,否则会连字都没有了
+                        }
+                    })
                     .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
                         @Override
                         public void onDismissed(Snackbar transientBottomBar, int event) {
