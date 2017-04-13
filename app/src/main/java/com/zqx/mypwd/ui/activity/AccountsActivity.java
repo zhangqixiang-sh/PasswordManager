@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 import com.zqx.mypwd.R;
 import com.zqx.mypwd.adapter.AccountAdapter;
 import com.zqx.mypwd.global.GlobalData;
@@ -34,7 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class AccountsActivity extends BaseActivity implements
-        SearchView.OnQueryTextListener, AccountsView, SwipeMenuCreator, OnSwipeMenuItemClickListener{
+        SearchView.OnQueryTextListener, AccountsView, SwipeMenuCreator, OnSwipeMenuItemClickListener, OnItemMoveListener {
     @BindView(R.id.search)
     SearchView            mSearch;
     @BindView(R.id.toolbar)
@@ -74,13 +76,15 @@ public class AccountsActivity extends BaseActivity implements
     private void initSwipeRecycler() {
         //初始化原生recycler属性
         mRvList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRvList.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        mAccounts = new ArrayList<>();
+        mAdapter = new AccountAdapter(mAccounts);
+        mRvList.setAdapter(mAdapter);
 
         //初始化第三方属性
         mRvList.setSwipeMenuCreator(this);
         mRvList.setSwipeMenuItemClickListener(this);
-        mAccounts = new ArrayList<>();
-        mAdapter = new AccountAdapter(mAccounts);
-        mRvList.setAdapter(mAdapter);
+        mRvList.setOnItemMoveListener(this);
         mRvList.setLongPressDragEnabled(true);
     }
 
@@ -232,5 +236,16 @@ public class AccountsActivity extends BaseActivity implements
             new AccountDialog(this,mAccounts.get(dataPosition)).show();
 
         }
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        mAdapter.notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        Log.d("debug", "onItemDismiss: ");
     }
 }
