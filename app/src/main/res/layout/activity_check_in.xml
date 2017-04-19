@@ -23,7 +23,7 @@
 
     <EditText
         android:maxLines="1"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:imeOptions="actionDone"
         android:id="@+id/et_pwd"
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
         android:background="@drawable/shape_frame_et"
         android:gravity="center"
         android:hint="或在此输入密码"
-        android:padding="13dp" />
+        android:padding="10dp" />
 
     <Button
         android:id="@+id/btn_confirm"

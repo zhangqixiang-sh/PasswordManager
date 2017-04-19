@@ -1,12 +1,14 @@
 package com.zqx.mypwd.ui.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,23 +29,22 @@ import org.greenrobot.eventbus.Subscribe;
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CheckInActivity extends BaseActivity implements TextView.OnEditorActionListener {
+public class CheckInActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
 
     public String mPwd;
     @BindView(R.id.et_pwd)
     EditText mEtPwd;
     private FingerprintManager mFinManager;
 
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_check_in;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_check_in);
+        ButterKnife.bind(this);
         mEtPwd.setOnEditorActionListener(this);
         EventBus.getDefault().register(this);
     }
@@ -125,7 +126,8 @@ public class CheckInActivity extends BaseActivity implements TextView.OnEditorAc
             return;
         }
         if (TextUtils.equals(mPwd, pwd)) {
-            startActivity(AccountsActivity.class, true);
+            startActivity(new Intent(this, AccountsActivity.class));
+            finish();
         } else {
             ToastUtil.show("密码不正确");
         }
@@ -142,7 +144,7 @@ public class CheckInActivity extends BaseActivity implements TextView.OnEditorAc
 
     //防止内存泄漏
     @RequiresApi(api = Build.VERSION_CODES.M)
-    static class AuthCallback extends FingerprintManager.AuthenticationCallback {
+     static class AuthCallback extends FingerprintManager.AuthenticationCallback {
 
         WeakReference<CheckInActivity> mActivity;
 
@@ -155,7 +157,8 @@ public class CheckInActivity extends BaseActivity implements TextView.OnEditorAc
             super.onAuthenticationSucceeded(result);
             CheckInActivity activity = mActivity.get();
             if (activity != null) {
-                activity.startActivity(AccountsActivity.class, true);
+                activity.startActivity(new Intent(activity, AccountsActivity.class));
+                activity.finish();
             }
 
         }

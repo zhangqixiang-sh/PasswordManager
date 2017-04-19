@@ -11,7 +11,7 @@ import com.zqx.mypwd.util.SpUtil;
 public class GlobalData {
 
     private static byte[] keyBytes;//AES加密/解密用的秘钥
-    private static boolean hidePwd = SpUtil.getBoolean(Spkey.HIDE_PWD, true);//是否隐藏密码,默认隐藏
+    private static boolean isHidePwd = SpUtil.getBoolean(Spkey.HIDE_PWD, true);//是否隐藏密码,默认隐藏
 
     public static byte[] getKeyBytes() {
 
@@ -26,13 +26,13 @@ public class GlobalData {
         return keyBytes;
     }
 
-    public static boolean getHidePwd() {
-        return hidePwd;
+    public static boolean isHidePwd() {
+        return isHidePwd;
     }
 
     public static void toggleHidePwd() {
-        hidePwd = !hidePwd;
-        SpUtil.saveBoolean(Spkey.HIDE_PWD, hidePwd);
+        isHidePwd = !isHidePwd;
+        SpUtil.saveBoolean(Spkey.HIDE_PWD, isHidePwd);
     }
 
 }

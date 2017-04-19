@@ -41,7 +41,7 @@ public class AccountAdapter extends SwipeMenuAdapter<AccountAdapter.ViewHolder> 
         AccountBean bean = mDatas.get(position);
         holder.mTvServer.setText(bean.server);
         holder.mTvName.setText("账号: " + bean.name);
-        if (GlobalData.getHidePwd()) {
+        if (GlobalData.isHidePwd()) {
             holder.mTvPwd.setText("密码: *********");
         } else {
             holder.mTvPwd.setText("密码: " + bean.pwd);

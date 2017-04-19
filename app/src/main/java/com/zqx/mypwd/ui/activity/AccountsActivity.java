@@ -1,10 +1,15 @@
 package com.zqx.mypwd.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -34,9 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class AccountsActivity extends BaseActivity implements
+public class AccountsActivity extends AppCompatActivity implements
         SearchView.OnQueryTextListener, AccountsView, SwipeMenuCreator, OnSwipeMenuItemClickListener, OnItemMoveListener {
+    public AccountsPresenter mPresenter;
     @BindView(R.id.search)
     SearchView            mSearch;
     @BindView(R.id.toolbar)
@@ -45,24 +53,39 @@ public class AccountsActivity extends BaseActivity implements
     SwipeMenuRecyclerView mRvList;
     @BindView(R.id.coor)
     CoordinatorLayout     mCoor;
-    public AccountsPresenter      mPresenter;
+    @BindView(R.id.fab_add)
+    FloatingActionButton  mFabAdd;
+    @BindView(R.id.fab_action)
+    FloatingActionButton  mFabAction;
     private ArrayList<AccountBean> mAccounts;
     private AccountAdapter         mAdapter;
-
-
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_accounts;
-    }
+    private boolean mCurrIsExpand = false; //记录当前是展开还是收起,默认是收起
+    private AnimatorListenerAdapter mAnimListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_accounts);
+        ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         mSearch.setOnQueryTextListener(this);
         initSwipeRecycler();
         mPresenter = new AccountsPresenter(this);
         mPresenter.queryAllAccounts();
+
+        mAnimListener = new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mFabAction.setClickable(true);
+                mFabAdd.setClickable(true);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mFabAction.setClickable(false);
+                mFabAdd.setClickable(false);
+            }
+        };
     }
 
     @Override
@@ -101,7 +124,7 @@ public class AccountsActivity extends BaseActivity implements
                 new AccountDialog(this).show();
                 break;
             case R.id.action_setting:
-                startActivity(SettingsActivity.class, false);
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
             case R.id.action_hide_pwd:
                 GlobalData.toggleHidePwd();
@@ -195,7 +218,7 @@ public class AccountsActivity extends BaseActivity implements
         swipeRightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。.
 
     }
-    
+
     @Override
     public void onItemClick(Closeable closeable, final int dataPosition, int menuPosition, int direction) {
 
@@ -233,7 +256,7 @@ public class AccountsActivity extends BaseActivity implements
 
         } else if (menuPosition == 0) {//点击编辑
             mRvList.smoothCloseMenu();
-            new AccountDialog(this,mAccounts.get(dataPosition)).show();
+            new AccountDialog(this, mAccounts.get(dataPosition)).show();
 
         }
     }
@@ -248,4 +271,27 @@ public class AccountsActivity extends BaseActivity implements
     public void onItemDismiss(int position) {
         Log.d("debug", "onItemDismiss: ");
     }
+
+    @OnClick(R.id.fab_add)
+    public void onFabAddClicked() {
+
+    }
+
+    @OnClick(R.id.fab_action)
+    public void onFabActionClicked() {
+        mFabAction.animate()
+                .rotationBy(mCurrIsExpand ? -135 : 135)
+                .setDuration(250)
+                .setListener(mAnimListener)
+                .start();
+
+        mFabAdd.animate()
+                .translationYBy(mCurrIsExpand ? 200 : -200)
+                .setDuration(250)
+                .setListener(mAnimListener)
+                .start();
+
+        mCurrIsExpand = !mCurrIsExpand;
+    }
+
 }
