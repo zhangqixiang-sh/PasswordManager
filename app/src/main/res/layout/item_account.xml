@@ -1,53 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:padding="5dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:background="@drawable/shape_frame_gray"
+    android:orientation="horizontal"
+    android:padding="2dp">
+
+    <TextView
+        android:id="@+id/tv_server"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="百度"
+        android:textColor="#444"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="#aaa" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shape_frame_gray"
-        android:orientation="horizontal"
-        android:padding="2dp">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_server"
-            android:layout_width="65dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="百度"
-            android:textColor="#444"
-            android:textSize="16sp" />
+            android:id="@+id/tv_name"
+            style="@style/textview_account"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="账号:1233425" />
 
         <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
             android:background="#aaa" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_name"
-                style="@style/textview_account"
-                android:text="账号:1233425" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#aaa" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <TextView
                 android:id="@+id/tv_pwd"
                 style="@style/textview_account"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="密码:1234443" />
 
-
+            <ImageView
+                android:id="@+id/iv_copy_pwd"
+                app:srcCompat="@drawable/ic_copy_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:padding="5dp" />
         </LinearLayout>
 
     </LinearLayout>
-</FrameLayout>
+
+</LinearLayout>
 
