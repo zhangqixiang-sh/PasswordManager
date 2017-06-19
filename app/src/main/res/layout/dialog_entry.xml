@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:divider="@drawable/divider_line"
+    android:orientation="vertical"
+    android:showDividers="middle">
 
     <TextView
         android:id="@+id/tv_title"
@@ -29,7 +30,7 @@
             android:layout_marginRight="10dp"
             android:text="服务方:"
             android:textColor="#444"
-            android:textSize="19sp" />
+            android:textSize="17sp" />
 
         <EditText
             android:id="@+id/et_server"
@@ -50,7 +51,7 @@
             android:layout_marginRight="10dp"
             android:text="账    号:"
             android:textColor="#444"
-            android:textSize="19sp" />
+            android:textSize="17sp" />
 
         <EditText
             android:id="@+id/et_name"
@@ -60,6 +61,7 @@
     </LinearLayout>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -71,7 +73,7 @@
             android:layout_marginRight="10dp"
             android:text="密    码:"
             android:textColor="#444"
-            android:textSize="19sp" />
+            android:textSize="17sp" />
 
         <EditText
             android:id="@+id/et_pwd"
@@ -86,7 +88,8 @@
         android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
+
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -94,9 +97,10 @@
             android:layout_weight="1"
             android:text="取消"
             android:textColor="#444"
-            android:textSize="15sp" />
+            android:textSize="18sp"
+            tools:ignore="HardcodedText,RtlHardcoded" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_confirm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -105,7 +109,8 @@
             android:layout_weight="1"
             android:text="确定"
             android:textColor="#444"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 </LinearLayout>
