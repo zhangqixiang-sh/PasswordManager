@@ -1,13 +1,15 @@
 package com.zqx.pwd.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.zqx.pwd.R;
 import com.zqx.pwd.event.PwdChangedEvent;
+import com.zqx.pwd.global.Spkey;
 import com.zqx.pwd.ui.dialog.PwdSettingDialog;
 import com.zqx.pwd.util.SpUtil;
-import com.zqx.pwd.global.Spkey;
+import com.zqx.pwd.util.StatusBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,6 +24,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setStatusBarColor(this, Color.parseColor("#fafafa"));
+        StatusBarUtil.setLightMode(this);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);

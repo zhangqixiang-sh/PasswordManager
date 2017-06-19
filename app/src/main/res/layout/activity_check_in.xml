@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -7,11 +8,12 @@
     android:paddingRight="16dp">
 
     <ImageView
+        android:id="@+id/iv_print"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:layout_marginTop="120dp"
-        android:src="@mipmap/finger_print" />
+        android:layout_marginTop="130dp"
+        app:srcCompat="@drawable/ic_fingerprint" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,24 +24,26 @@
         android:textSize="20sp" />
 
     <EditText
-        android:maxLines="1"
-        android:inputType="textPassword"
-        android:imeOptions="actionDone"
         android:id="@+id/et_pwd"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/shape_frame_et"
-        android:gravity="center"
         android:hint="或在此输入密码"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:maxLines="1"
         android:padding="10dp" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_confirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="38dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:background="@drawable/selector_btn"
+        android:gravity="center"
         android:text="确定"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
@@ -55,8 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:padding="16dp"
+        android:padding="10dp"
         android:text="设置密码"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp" />
+        android:textColor="@color/btn_normal_green"
+        android:textSize="16sp" />
 </LinearLayout>

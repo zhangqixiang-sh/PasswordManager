@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/btn_pressed_green" android:state_pressed="true" />
-    <item android:drawable="@color/btn_normal_green" />
+
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/btn_pressed_green" />
+            <corners android:radius="50dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="@color/btn_normal_green" />
+            <corners android:radius="50dp" />
+        </shape>
+    </item>
 </selector>

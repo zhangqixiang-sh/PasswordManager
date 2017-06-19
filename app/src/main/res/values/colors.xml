@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#393A3F</color>
     <color name="colorPrimaryDark">#303135</color>
-    <color name="colorAccent">#cccccc</color>
+    <color name="colorAccent">#bbbbbb</color>
     <color name="alpha_black">#55000000</color>
     <color name="gray_9c">#9c9c9c</color>
     <color name="gray_aa">#aaaaaa</color>
-    <color name="btn_pressed_green">#1c8936</color>
+    <color name="btn_pressed_green">#259f42</color>
     <color name="btn_normal_green">#46C01B</color>
     <color name="blue_primary">#3F51B5</color>
     <color name="blue_dark">#303F9F</color>

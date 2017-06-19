@@ -18,10 +18,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zqx.pwd.R;
-import com.zqx.pwd.ui.dialog.PwdSettingDialog;
 import com.zqx.pwd.event.PwdChangedEvent;
-import com.zqx.pwd.util.SpUtil;
 import com.zqx.pwd.global.Spkey;
+import com.zqx.pwd.ui.dialog.PwdSettingDialog;
+import com.zqx.pwd.util.SpUtil;
 import com.zqx.pwd.util.StatusBarUtil;
 import com.zqx.pwd.util.ToastUtil;
 
@@ -123,6 +123,17 @@ public class CheckInActivity extends AppCompatActivity implements TextView.OnEdi
 
     }
 
+    private int countPrintClick = 0;
+    @OnClick(R.id.iv_print)
+    public void onPrintClicked() {
+        countPrintClick++;
+        if (countPrintClick == 5) {
+            String pwd = SpUtil.getString(Spkey.PWD, "");
+            ToastUtil.show("你的密码是:"+pwd);
+            countPrintClick = 0;
+        }
+    }
+
     private void doPwdEntryConfirm() {
         String pwd = mEtPwd.getText().toString().trim();
         if (TextUtils.isEmpty(pwd)) {
@@ -146,9 +157,11 @@ public class CheckInActivity extends AppCompatActivity implements TextView.OnEdi
     }
 
 
+
+
     //防止内存泄漏
     @RequiresApi(api = Build.VERSION_CODES.M)
-     static class AuthCallback extends FingerprintManager.AuthenticationCallback {
+    static class AuthCallback extends FingerprintManager.AuthenticationCallback {
 
         WeakReference<CheckInActivity> mActivity;
 
