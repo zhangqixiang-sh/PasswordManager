@@ -46,14 +46,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:background="#fff"
             android:id="@+id/btn_cancel"
-            android:textSize="16sp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/gray_9c"
-            android:text="取消" />
+            android:background="#fff"
+            android:text="取消"
+            android:textColor="@color/gray_66"
+            android:textSize="16sp" />
 
         <View
             android:layout_width="1px"
@@ -67,7 +67,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="16sp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/selector_btn_text_color"
             android:text="确认" />
 
     </LinearLayout>

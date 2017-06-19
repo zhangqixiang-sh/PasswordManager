@@ -26,7 +26,7 @@
         android:id="@+id/btn_pwd_setting"
         android:layout_width="300dp"
         android:layout_height="38dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="35dp"
         android:background="@drawable/selector_btn"
         android:text="点击设置密码"
         android:textColor="@android:color/white"

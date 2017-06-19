@@ -10,4 +10,5 @@
     <color name="btn_normal_green">#46C01B</color>
     <color name="blue_primary">#3F51B5</color>
     <color name="blue_dark">#303F9F</color>
+    <color name="gray_66">#666666</color>
 </resources>
