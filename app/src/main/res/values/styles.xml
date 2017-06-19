@@ -62,4 +62,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="ll_dialog_account">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

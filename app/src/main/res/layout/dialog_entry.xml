@@ -3,26 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:divider="@drawable/divider_line"
+    android:divider="@drawable/divider_line_horizontal"
     android:orientation="vertical"
     android:showDividers="middle">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/title_bar_height"
         android:background="@color/colorPrimary"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:text="添加账户"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="16sp"
+        tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="8dp">
+    <LinearLayout style="@style/ll_dialog_account">
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,7 +27,7 @@
             android:layout_marginRight="10dp"
             android:text="服务方:"
             android:textColor="#444"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_server"
@@ -39,11 +36,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="8dp">
+    <LinearLayout style="@style/ll_dialog_account">
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,7 +44,7 @@
             android:layout_marginRight="10dp"
             android:text="账    号:"
             android:textColor="#444"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_name"
@@ -60,12 +53,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="8dp">
+    <LinearLayout style="@style/ll_dialog_account">
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,7 +61,7 @@
             android:layout_marginRight="10dp"
             android:text="密    码:"
             android:textColor="#444"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_pwd"
@@ -85,7 +73,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:divider="@drawable/divider_line_vertical"
+        android:dividerPadding="3dp"
+        android:orientation="horizontal"
+        android:showDividers="middle">
 
         <TextView
             android:id="@+id/btn_cancel"
