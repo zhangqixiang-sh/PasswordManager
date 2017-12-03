@@ -42,17 +42,17 @@ public class AccountsActivity extends AppCompatActivity implements
         SearchView.OnQueryTextListener, AccountsView, SwipeMenuCreator, OnSwipeMenuItemClickListener, OnItemMoveListener {
     public AccountsPresenter mPresenter;
     @BindView(R.id.search)
-    SearchView            mSearch;
+    SearchView mSearch;
     @BindView(R.id.toolbar)
-    Toolbar               mToolbar;
+    Toolbar mToolbar;
     @BindView(R.id.rv_list)
     SwipeMenuRecyclerView mRvList;
     @BindView(R.id.coor)
-    CoordinatorLayout     mCoor;
+    CoordinatorLayout mCoor;
     @BindView(R.id.iv_no_data)
-    ImageView             mIvNoData;
+    ImageView mIvNoData;
     private ArrayList<AccountBean> mAccounts;
-    private AccountAdapter         mAdapter;
+    private AccountAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
